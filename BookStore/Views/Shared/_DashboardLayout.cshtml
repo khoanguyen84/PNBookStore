@@ -142,12 +142,12 @@
                             <div class="col-sm-6">
                                 <h1 class="m-0">@ViewBag.Title</h1>
                             </div><!-- /.col -->
-                            <div class="col-sm-6">
+                            @*<div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="#">Home</a></li>
                                     <li class="breadcrumb-item active">Category</li>
                                 </ol>
-                            </div><!-- /.col -->
+                            </div>*@<!-- /.col -->
                         </div><!-- /.row -->
                     </div><!-- /.container-fluid -->
                 </div>
@@ -169,12 +169,14 @@
             <!-- /.control-sidebar -->
             <!-- Main Footer -->
             <footer class="main-footer">
-                <strong>Copyright &copy; 2014-2021.</strong>
+                <strong>Copyright &copy; 2014-@DateTime.Now.Year.</strong>
                 All rights reserved.
             </footer>
         </div>
 
         <script src="~/plugins/jquery/jquery.min.js"></script>
+        <script src="~/plugins/jquery-validation/jquery.validate.min.js"></script>
+        <script src="~/plugins/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
         <script src="~/plugins/bootstrap/js/bootstrap.min.js"></script>
         <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="~/dist/js/adminlte.js"></script>

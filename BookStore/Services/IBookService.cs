@@ -1,4 +1,5 @@
 ﻿using BookStore.Entities;
+using BookStore.Models.Book;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace BookStore.Services
 {
-    public interface ICategoryService
+    public interface IBookService
     {
-        Task<List<Category>> GetCategories();
-        Task<Category> GetCategoryById(int categoryId);
+        Task<Book> Create(Book createBook);
     }
 }

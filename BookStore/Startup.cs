@@ -34,7 +34,8 @@ namespace BookStore
             services.AddIdentity<AppIdentityUser, IdentityRole>().AddEntityFrameworkStores<BookStoreDBContext>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IUserService, UserService>();
-            
+            services.AddScoped<IBookService, BookService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

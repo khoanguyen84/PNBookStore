@@ -17,9 +17,9 @@ namespace BookStore.Controllers
         {
             this.categoryService = categoryService;
         }
-        public IActionResult Index(int? pageNumber, int? pageSize, string keyword)
+        public async Task<IActionResult> Index(int? pageNumber, int? pageSize, string keyword)
         {
-            var categories = categoryService.GetCategories(); ;
+            var categories = await categoryService.GetCategories(); ;
             var pagination = new Pagination(categories.Count, pageNumber, pageSize, null);
             var catView = new CategoryView()
             {
