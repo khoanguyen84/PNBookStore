@@ -20,6 +20,8 @@ namespace BookStore.Models.Book
         public int PublishYear { get; set; }
         [Required(ErrorMessage = "The price is required")]
         public int Price { get; set; }
+        [Required(ErrorMessage = "The quantity is required")]
+        public int Quantity { get; set; }
         [Required(ErrorMessage = "The description is required")]
         [MaxLength(1000)]
         public string Description { get; set; }

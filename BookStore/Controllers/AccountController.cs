@@ -40,7 +40,7 @@ namespace BookStore.Controllers
             return View();
         }
 
-        public IActionResult Singout()
+        public IActionResult Signout()
         {
             userService.Signout();
             return RedirectToAction("Login", "Account");

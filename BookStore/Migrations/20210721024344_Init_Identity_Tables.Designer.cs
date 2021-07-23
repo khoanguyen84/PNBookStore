@@ -100,7 +100,7 @@ namespace BookStore.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CatygoryName")
+                    b.Property<string>("CategoryName")
                         .IsRequired()
                         .HasColumnType("nvarchar(250)")
                         .HasMaxLength(250);
@@ -116,25 +116,25 @@ namespace BookStore.Migrations
                         new
                         {
                             CategoryId = 1,
-                            CatygoryName = "Khoa học viễn tưởng",
+                            CategoryName = "Khoa học viễn tưởng",
                             IsDeleted = false
                         },
                         new
                         {
                             CategoryId = 2,
-                            CatygoryName = "Giáo khoa",
+                            CategoryName = "Giáo khoa",
                             IsDeleted = false
                         },
                         new
                         {
                             CategoryId = 3,
-                            CatygoryName = "Tham khảo",
+                            CategoryName = "Tham khảo",
                             IsDeleted = false
                         },
                         new
                         {
                             CategoryId = 4,
-                            CatygoryName = "Truyện tranh",
+                            CategoryName = "Truyện tranh",
                             IsDeleted = false
                         });
                 });

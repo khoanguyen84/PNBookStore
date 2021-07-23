@@ -8,7 +8,7 @@ namespace BookStore.Migrations
         {
             migrationBuilder.InsertData(
                 table: "Categories",
-                columns: new[] { "CategoryId", "CatygoryName", "IsDeleted" },
+                columns: new[] { "CategoryId", "CategoryName", "IsDeleted" },
                 values: new object[,]
                 {
                     { 1, "Khoa học viễn tưởng", false },

@@ -21,6 +21,8 @@ namespace BookStore.Entities
         [Required]
         public int Price { get; set; }
         [Required]
+        public int Quantity { get; set; }
+        [Required]
         [MaxLength(1000)]
         public string Description { get; set; }
         [Required]

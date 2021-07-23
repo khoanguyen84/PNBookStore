@@ -69,7 +69,8 @@ namespace BookStore.Controllers
                     CategoryId = categoryId,
                     IsDeleted = false,
                     Price = createBook.Price,
-                    PublishYear = createBook.PublishYear
+                    PublishYear = createBook.PublishYear,
+                    Quantity = createBook.Quantity
                 };
                 await bookService.Create(newBook);
                 return RedirectToAction("Index","Book", new { catId = categoryId });

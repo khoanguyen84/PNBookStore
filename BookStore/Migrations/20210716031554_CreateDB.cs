@@ -12,7 +12,7 @@ namespace BookStore.Migrations
                 {
                     CategoryId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CatygoryName = table.Column<string>(maxLength: 250, nullable: false),
+                    CategoryName = table.Column<string>(maxLength: 250, nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>

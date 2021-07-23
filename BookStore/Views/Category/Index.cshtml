@@ -35,14 +35,17 @@
     <table class="table table-bordered table-hover table-striped table-responsive-sm">
         <thead class="thead-dark">
             <tr>
-                <th style="width: 10%">
+                <th style="width: 5%">
                     #
                 </th>
-                <th style="width: 40%">
+                <th style="width: 35%">
                     Category Name
                 </th>
                 <th style="width: 10%" class="text-center">
                     Books
+                </th>
+                <th style="width: 10%" class="text-center">
+                    Total quantity
                 </th>
                 <th style="width: 10%" class="text-center">
                     Status
@@ -57,8 +60,11 @@
             <tr>
                 <td>@cat.CategoryId.</td>
                 <td>@cat.CategoryName</td>
-                <td class="text-right text-center">
+                <td class="text-center">
                     <a asp-controller="Book" asp-action="Index" asp-route-catId="@cat.CategoryId" class="btn btn-warning btn-sm">@cat.Books.Count</a>
+                </td>
+                <td class="text-center">
+                    @cat.Books.Sum(b => b.Quantity)
                 </td>
                 <td class="project-state text-center">
                     @if (cat.IsDeleted)
