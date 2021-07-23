@@ -1,0 +1,106 @@
+﻿@model CategoryView
+@{
+    ViewBag.Title = "Category";
+    var count = 1;
+    var pageNumber = 1;
+    int[] pagesizeItem = new int[] { 12, 24, 36, 48, 60 };
+}
+
+<div class="row">
+    <div>
+        <select id="pageSize" class="custom-select" onchange="changePageSize()">
+            @foreach (int item in pagesizeItem)
+            {
+                if (item == Model.Pagination.PageSize)
+                {
+                    <option value="@item" selected>@item</option>
+                }
+                else
+                {
+                    <option value="@item">@item</option>
+                }
+            }
+        </select>
+        <a class="btn btn-success btn-sm ml-auto" href="#">
+            <i class="fas fa-plus">
+            </i>
+            Create
+        </a>
+    </div>
+
+    <table class="table table-bordered table-hover table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th style="width: 10%">
+                        #
+                </th>
+                <th style="width: 40%">
+                    Category Name
+                </th>
+                    <th style="width: 10%">
+                    Books
+                </th>
+                <th style="width: 40%">
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Category cat in Model.Categories)
+            {
+                <tr>
+                    <td>@(count++).</td>
+                    <td>@cat.CategoryName</td>
+                    <td class="text-right">
+                        <a href="#" class="btn btn-warning btn-sm">@cat.Books.Count</a>
+                    </td>
+                    <td class="project-actions text-right">
+                        <a class="btn btn-primary btn-sm" href="#">
+                            <i class="fas fa-folder">
+                            </i>
+                            View
+                        </a>
+                        <a class="btn btn-info btn-sm" href="#">
+                            <i class="fas fa-pencil-alt">
+                            </i>
+                            Edit
+                        </a>
+                        <a class="btn btn-danger btn-sm" href="#">
+                            <i class="fas fa-trash">
+                            </i>
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+    <div>
+        <ul class="pagination">
+            <li class="@(Model.Pagination.CurrentPage == 1 ? "page-item disabled" : "page-item")"><a class="page-link" asp-controller="Category" asp-action="index" asp-route-pageNumber="1">First</a></li>
+            <li class="@(Model.Pagination.CurrentPage == 1 ? "page-item disabled" : "page-item")"><a class="page-link" asp-controller="Category" asp-action="index" asp-route-pageNumber="@(Model.Pagination.CurrentPage-1)">Previous</a></li>
+            @for (pageNumber = Model.Pagination.StartPage; pageNumber <= Model.Pagination.EndPage; pageNumber++)
+            {
+                <li class="@(pageNumber == Model.Pagination.CurrentPage ? "page-item active" : "page-item")"><a class="page-link" asp-controller="Category" asp-action="index" asp-route-pageNumber="@pageNumber">@pageNumber</a></li>
+            }
+            <li class="@(Model.Pagination.CurrentPage == Model.Pagination.TotalPages ? "page-item disabled" : "page-item")"><a class="page-link" asp-action="index" asp-route-pageNumber="@(Model.Pagination.CurrentPage+1)">Next</a></li>
+            <li class="@(Model.Pagination.CurrentPage == Model.Pagination.TotalPages ? "page-item disabled" : "page-item")"><a class="page-link" asp-action="index" asp-route-pageNumber="@Model.Pagination.TotalPages">Last</a></li>
+        </ul>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        function changePageSize() {
+            window.location.href = `/Category/Index/?pageNumber=1&pageSize=${$('#pageSize').val()}`;
+        }
+        function search(el) {
+            if ($(el).val() == null || $(el).val() == '') {
+                window.location.href = `/Category/Index/?pageNumber=1&pageSize=${$('#pageSize').val()}`;
+            }
+            else {
+                window.location.href = `/Category/Index/?pageNumber=1&pageSize=${$('#pageSize').val()}&keyword=${$(el).val()}`;
+            }
+        }
+    </script>
+}
