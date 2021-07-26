@@ -79,5 +79,110 @@ namespace BookStore.Controllers
             ViewBag.CategoryId = categoryId;
             return View();
         }
+
+        [HttpGet]
+        [Route("/Book/Modify/{bookId}")]
+        public async Task<IActionResult> Modify(int bookId)
+        {
+            ViewBag.CategoryName = categoryName;
+            ViewBag.CategoryId = categoryId;
+            var book = await bookService.GetBookById(bookId);
+            var modifyBook = new ModifyBook()
+            {
+                BookId = book.BookId,
+                Authors = book.Authors,
+                BookName = book.BookName,
+                CategoryId = book.CategoryId,
+                Description = book.Description,
+                ExistPhoto = book.Photo,
+                Price = book.Price,
+                PublishYear = book.PublishYear,
+                Quantity = book.Quantity
+            };
+            return View(modifyBook);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Modify(ModifyBook modifyBook)
+        {
+            if (ModelState.IsValid)
+            {
+                var book = await bookService.GetBookById(modifyBook.BookId);
+                if(book != null)
+                {
+                    string filename = book.Photo;
+                    if (modifyBook.Photo != null)
+                    {
+                        //Delete old photo
+                        var oldFileName = filename.Split("/")[2];
+                        if (string.Compare(oldFileName, "no-photo.jpg") != 0)
+                        {
+                            System.IO.File.Delete(Path.Combine(webHostEnvironment.ContentRootPath, @"wwwroot\images\", oldFileName));
+                        }
+
+                        string folderPath = Path.Combine(webHostEnvironment.ContentRootPath, @"wwwroot\images\");
+                        filename = $"{DateTime.Now.ToString("ddMMyyyyhhmmss")}_{modifyBook.Photo.FileName}";
+                        string fullpath = Path.Combine(folderPath, filename);
+                        using (var file = new FileStream(fullpath, FileMode.Create))
+                        {
+                            modifyBook.Photo.CopyTo(file);
+                        }
+                    }
+
+                    book.Photo = modifyBook.Photo != null ? $"/images/{filename}" : filename;
+                    book.Authors = modifyBook.Authors;
+                    book.Description = modifyBook.Description;
+                    book.BookName = modifyBook.BookName;
+                    book.CategoryId = categoryId;
+                    book.Price = modifyBook.Price;
+                    book.PublishYear = modifyBook.PublishYear;
+                    book.Quantity = modifyBook.Quantity;
+                    book.BookId = modifyBook.BookId;
+
+                    await bookService.Modify(book);
+                    return RedirectToAction("Index", "Book", new { catId = categoryId });
+                }
+                
+            }
+            ViewBag.CategoryName = categoryName;
+            ViewBag.CategoryId = categoryId;
+            return View(modifyBook);
+        }
+
+        [HttpGet]
+        [Route("/Book/View/{bookId}")]
+        public async Task<IActionResult> View(int bookId)
+        {
+            var book = await bookService.GetBookById(bookId);
+            var viewBook = new ViewBook()
+            {
+                BookId = book.BookId,
+                Authors = book.Authors,
+                BookName = book.BookName,
+                CategoryId = book.CategoryId,
+                Description = book.Description,
+                ExistPhoto = book.Photo,
+                Price = book.Price,
+                PublishYear = book.PublishYear,
+                Quantity = book.Quantity,
+                Category = book.Category
+            };
+            return View(viewBook);
+        }
+
+        [HttpGet]
+        [Route("/Book/Remove/{bookId}")]
+        public async Task<IActionResult> Remove(int bookId)
+        {
+            await bookService.Remove(bookId);
+            return RedirectToAction("Index", "Book", new { catId = categoryId });
+        }
+
+        [HttpGet]
+        [Route("/Book/Restore/{bookId}")]
+        public async Task<IActionResult> Restore(int bookId)
+        {
+            await bookService.Restore(bookId);
+            return RedirectToAction("Index", "Book", new { catId = categoryId });
+        }
     }
 }

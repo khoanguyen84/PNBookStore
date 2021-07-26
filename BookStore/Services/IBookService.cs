@@ -10,5 +10,9 @@ namespace BookStore.Services
     public interface IBookService
     {
         Task<Book> Create(Book createBook);
+        Task<Book> GetBookById(int bookId);
+        Task<Book> Modify(Book book);
+        Task<Book> Remove(int bookId);
+        Task<Book> Restore(int bookId);
     }
 }
