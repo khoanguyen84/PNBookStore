@@ -1,4 +1,5 @@
 ﻿using BookStore.Entities;
+using BookStore.Models;
 using BookStore.Models.Book;
 using BookStore.Services;
 using Microsoft.AspNetCore.Hosting;
@@ -27,13 +28,24 @@ namespace BookStore.Controllers
             this.webHostEnvironment = webHostEnvironment;
             this.bookService = bookService;
         }
-        [Route("/Book/Index/{catId=1}")]
-        public async Task<IActionResult> Index(int catId)
+        [Route("/Book/Index/{catId=1}/{pageNumber=1}/{pageSize=10}/{keyword=''}")]
+        public async Task<IActionResult> Index(int catId, int? pageNumber, int? pageSize, string keyword)
         {
             categoryId = catId;
             var category = await categoryService.GetCategoryById(catId);
             categoryName = category.CategoryName;
-            return View(category);
+            var pagination = new Pagination(category.Books.Count, pageNumber, pageSize, keyword);
+            keyword = keyword == "''" ? string.Empty : keyword;
+            var books = string.IsNullOrEmpty(keyword) ? category.Books : category.Books.Where(b => b.BookName.Contains(keyword) || b.Authors.Contains(keyword)).ToList();
+            books = books.OrderByDescending(b => b.BookId).ToList().Skip((pagination.CurrentPage - 1) * pagination.PageSize).Take(pagination.PageSize).ToList();
+            category.Books = books;
+            var listBook = new ListBook()
+            {
+
+                Category = category,
+                Pagination = pagination
+            };
+            return View(listBook);
         }
         
         [HttpGet]

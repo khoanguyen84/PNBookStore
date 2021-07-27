@@ -17,7 +17,7 @@ namespace BookStore.Models
         public Pagination(int totalItems, int? page_number, int? page_size, string keyword)
         {
             TotalItems = totalItems;
-            PageSize = page_size.HasValue ? page_size.Value : 12;
+            PageSize = page_size.HasValue ? page_size.Value : 10;
             TotalPages = (int)Math.Ceiling((decimal)TotalItems / (decimal)PageSize);
             CurrentPage = page_number.HasValue ? page_number.Value : 1;
             Keyword = keyword;

@@ -1,16 +1,34 @@
-﻿@model Category 
+﻿@model ListBook 
 @using System.Globalization 
 @{
-    ViewBag.Title = Model.CategoryName;
+    ViewBag.Title = Model.Category.CategoryName;
     string FormatCurrency(double number)
     {
         CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
         return number.ToString("#,###", cul.NumberFormat);
     }
+    var pageIndex = 1;
+    int[] pagesizeItem = new int[] { 10, 20, 30, 40, 50 };
 }
 
 <div class="row">
     <div class="w-100 mb-2">
+        <div class="float-left">
+            <input type="hidden" id="catId" value="@Model.Category.CategoryId" />
+            <select id="pageSize" class="custom-select" onchange="changePageSize()">
+                @foreach (int item in pagesizeItem)
+                {
+                    if (item == Model.Pagination.PageSize)
+                    {
+                        <option value="@item" selected>@item</option>
+                    }
+                    else
+                    {
+                        <option value="@item">@item</option>
+                    }
+                }
+            </select>
+        </div>
         <div class="float-right">
             <a class="btn btn-success" asp-controller="Book" asp-action="Create">
                 <i class="fas fa-plus">
@@ -54,7 +72,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (Book book in Model.Books)
+            @foreach (Book book in Model.Category.Books)
             {
                 <tr>
                     <td>@book.BookId.</td>
@@ -106,7 +124,26 @@
                     </td>
                 </tr>
             }
-
         </tbody>
     </table>
 </div>
+<div class="row">
+    <ul class="pagination">
+        <li class="@(Model.Pagination.CurrentPage == 1 ? "page-item disabled" : "page-item")"><a class="page-link" asp-controller="Book" asp-action="Index" asp-route-pageNumber="1">First</a></li>
+        <li class="@(Model.Pagination.CurrentPage == 1 ? "page-item disabled" : "page-item")"><a class="page-link" asp-controller="Book" asp-action="Index" asp-route-pageNumber="@(Model.Pagination.CurrentPage-1)">Previous</a></li>
+        @for (pageIndex = Model.Pagination.StartPage; pageIndex <= Model.Pagination.EndPage; pageIndex++)
+        {
+            <li class="@(pageIndex == Model.Pagination.CurrentPage ? "page-item active" : "page-item")"><a class="page-link" asp-controller="Book" asp-action="Index" asp-route-pageNumber="@pageIndex">@pageIndex</a></li>
+        }
+        <li class="@(Model.Pagination.CurrentPage == Model.Pagination.TotalPages ? "page-item disabled" : "page-item")"><a class="page-link" asp-controller="Book" asp-action="Index" asp-route-pageNumber="@(Model.Pagination.CurrentPage+1)">Next</a></li>
+        <li class="@(Model.Pagination.CurrentPage == Model.Pagination.TotalPages ? "page-item disabled" : "page-item")"><a class="page-link" asp-controller="Book" asp-action="Index" asp-route-pageNumber="@Model.Pagination.TotalPages">Last</a></li>
+    </ul>
+</div>
+
+@section scripts{ 
+    <script asp-append-version="true">
+        function changePageSize() {
+            window.location.href = `/Book/Index/${$('#catId').val()}/1/${$('#pageSize').val()}`;
+        }
+    </script>
+}

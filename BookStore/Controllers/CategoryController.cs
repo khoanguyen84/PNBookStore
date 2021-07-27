@@ -17,9 +17,10 @@ namespace BookStore.Controllers
         {
             this.categoryService = categoryService;
         }
+        [Route("/Category/Index/{pageNumber=1}/{pageSize=10}/{keyword=''}")]
         public async Task<IActionResult> Index(int? pageNumber, int? pageSize, string keyword)
         {
-            var categories = await categoryService.GetCategories(); ;
+            var categories = await categoryService.GetCategories();
             var pagination = new Pagination(categories.Count, pageNumber, pageSize, null);
             var catView = new CategoryView()
             {

@@ -3,7 +3,7 @@
     ViewBag.Title = "Category";
     var count = 1;
     var pageNumber = 1;
-    int[] pagesizeItem = new int[] { 12, 24, 36, 48, 60 };
+    int[] pagesizeItem = new int[] { 10, 20, 30, 40, 50 };
 }
 
 <div class="row">
@@ -110,14 +110,14 @@
 @section scripts{
     <script>
         function changePageSize() {
-            window.location.href = `/Category/Index/?pageNumber=1&pageSize=${$('#pageSize').val()}`;
+            window.location.href = `/Category/Index/1/${$('#pageSize').val()}`;
         }
         function search(el) {
             if ($(el).val() == null || $(el).val() == '') {
-                window.location.href = `/Category/Index/?pageNumber=1&pageSize=${$('#pageSize').val()}`;
+                window.location.href = `/Category/Index/1/${$('#pageSize').val()}`;
             }
             else {
-                window.location.href = `/Category/Index/?pageNumber=1&pageSize=${$('#pageSize').val()}&keyword=${$(el).val()}`;
+                window.location.href = `/Category/Index/1/${$('#pageSize').val()}/${$(el).val()}`;
             }
         }
     </script>
