@@ -1,8 +1,46 @@
-﻿@model List<Category>
+﻿@model List<BookStore.Entities.Category>
+@using System.Globalization
+@{
+    ViewBag.Title = "Home";
 
-<select>
-   @foreach (var cat in Model)
+    string FormatCurrency(double number)
     {
-        <option value="@cat.CategoryName">@cat.CategoryName</option>
+        CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
+        return number.ToString("#,###", cul.NumberFormat);
     }
-</select>
+}
+
+
+@foreach (Category cat in Model)
+{
+    <div class="panel panel-success">
+        <div class="panel-heading"><h2>@cat.CategoryName</h2></div>
+        <div class="panel-body">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4">
+                @foreach (Book book in cat.Books)
+                {
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img class="card-img-top" style="height:200px" src="@Url.Content(book.Photo)" alt="@book.BookName" />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">@book.BookName</h5>
+                                    <!-- Product price-->
+                                    @FormatCurrency((double)book.Price)đ - @book.Quantity
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" asp-controller="Home" asp-action="AddToCart" asp-route-bookId="@book.BookId">Add to cart</a></div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+

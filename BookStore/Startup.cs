@@ -1,4 +1,4 @@
-using BookStore.DBContexts;
+﻿using BookStore.DBContexts;
 using BookStore.Entities;
 using BookStore.Services;
 using Microsoft.AspNetCore.Builder;
@@ -36,6 +36,11 @@ namespace BookStore
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IBookService, BookService>();
 
+            services.AddDistributedMemoryCache(); // Đăng ký dịch vụ lưu cache trong bộ nhớ (Session sẽ sử dụng nó)
+            services.AddSession(cfg => {                    // Đăng ký dịch vụ Session
+                cfg.Cookie.Name = "pnbookstore";             // Đặt tên Session - tên này sử dụng ở Browser (Cookie)
+                cfg.IdleTimeout = new TimeSpan(0, 30, 0);    // Thời gian tồn tại của Session
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,10 +54,11 @@ namespace BookStore
             app.UseAuthentication();
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(name: "default", pattern: "{controller=Account}/{action=Login}/{id?}");
+                endpoints.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
