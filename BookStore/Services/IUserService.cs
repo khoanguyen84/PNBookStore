@@ -12,5 +12,6 @@ namespace BookStore.Services
         Task<LoginResult> Login(Login LoginUser);
 
         void Signout();
+        Task<RegisterResult> Register(Register register);
     }
 }

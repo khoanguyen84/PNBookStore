@@ -6,7 +6,7 @@
     <!-- /.login-logo -->
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
-            <a href="../../index2.html" class="h1"><b>BookStore</b>Sign in</a>
+            <a asp-controller="Home" asp-action="Index" class="h1"><b>BookStore</b>Sign in</a>
         </div>
         <div class="card-body">
             @if (ViewBag.Error != null)
@@ -54,11 +54,11 @@
                 </div>
             </form>
 
-            <p class="mb-1">
+            @*<p class="mb-1">
                 <a href="forgot-password.html">I forgot my password</a>
-            </p>
+            </p>*@
             <p class="mb-0">
-                <a href="register.html" class="text-center">Register a new membership</a>
+                <a asp-controller="Account" asp-action="Register" class="text-center">Register a new membership</a>
             </p>
         </div>
         <!-- /.card-body -->

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace BookStore.Controllers
 {
-    [Authorize]
-    public class DashboardController : Controller
+    public class ErrorsController : Controller
     {
-        public IActionResult Index()
+        public IActionResult NotFound()
         {
             return View();
         }

@@ -113,6 +113,13 @@ namespace BookStore.DBContexts
                     Name = "SystemAdmin",
                     NormalizedName = "SystemAdmin",
                     ConcurrencyStamp = "1"
+                },
+                new IdentityRole()
+                {
+                    Id = "32ffd287-205f-43a2-9f0d-80bc5309fb47",
+                    Name = "Customer",
+                    NormalizedName = "Customer",
+                    ConcurrencyStamp = "2"
                 });
         }
         private void SeedingAspNetUserRole(ModelBuilder modelBuilder)

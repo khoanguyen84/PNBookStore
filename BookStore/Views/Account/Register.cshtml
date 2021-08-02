@@ -1,0 +1,65 @@
+﻿@model Register
+@{
+    ViewBag.Title = "Register";
+}
+<div class="register-box">
+    <div class="card card-outline card-primary">
+        <div class="card-header text-center">
+            <a asp-controller="Home" asp-action="Index" class="h1"><b>BookStore</b>Sign up</a>
+        </div>
+        <div class="card-body register-card-body">
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @Html.Raw(ViewBag.Error)
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+            <form method="post">
+                <div class="input-group mb-3">
+                    <input asp-for="Email" class="form-control" placeholder="Email">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
+                        </div>
+                    </div>
+                    <span asp-validation-for="Email" class="text-danger w-100"></span>
+
+                </div>
+                <div class="input-group mb-3">
+                    <input asp-for="Password" class="form-control" placeholder="Password">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger w-100"></span>
+                </div>
+                <div class="input-group mb-3">
+                    <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm password">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger w-100"></span>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary btn-block">Cancel</a>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-8">
+                        <button type="submit" class="btn btn-primary btn-block">Register</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </form>
+
+            <a asp-controller="Account" asp-action="Login">I already have a membership</a>
+        </div>
+        <!-- /.form-box -->
+    </div><!-- /.card -->
+</div>

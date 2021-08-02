@@ -1,12 +1,15 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using Newtonsoft.Json
+
 @inject IHttpContextAccessor HttpContextAccessor
+@inject SignInManager<AppIdentityUser> signInManager
 @{
     var session = HttpContextAccessor.HttpContext.Session;
-    string jsoncart = session.GetString (BookStore.Controllers.HomeController.CARTKEY);
+    string jsoncart = session.GetString(BookStore.Controllers.HomeController.CARTKEY);
     var cart = new List<CartItem>();
-    if (jsoncart != null) {
-    cart = JsonConvert.DeserializeObject<List<CartItem>> (jsoncart);
+    if (jsoncart != null)
+    {
+        cart = JsonConvert.DeserializeObject<List<CartItem>>(jsoncart);
     }
 }
 <!DOCTYPE html>
@@ -32,6 +35,15 @@
                     Cart
                     <span class="badge bg-dark text-white rounded-pill">@cart.Count</span>
                 </a>
+                @if (signInManager.IsSignedIn(User))
+                {
+                     <a title="Click to signout" asp-controller="Account" asp-action="Signout" class="btn btn-secondary btn-sm">@User.Identity.Name</a>
+                }
+                else
+                {
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-secondary btn-sm">Login</a>
+                }
+
             </div>
         </div>
     </nav>

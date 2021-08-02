@@ -2,6 +2,7 @@
 using BookStore.Models;
 using BookStore.Models.Book;
 using BookStore.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Controllers
 {
+    [Authorize]
     public class BookController : Controller
     {
         private static int categoryId;

@@ -30,6 +30,34 @@ namespace BookStore.Controllers
             if (ModelState.IsValid)
             {
                 var result = await userService.Login(login);
+                if (result.Success && result.Roles.Length >0)
+                {
+                    if (result.Roles.Contains("SystemAdmin"))
+                    {
+                        return RedirectToAction("Index", "Dashboard");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                ViewBag.Error = result.Message;
+                return View();
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Register(Register register)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await userService.Register(register);
                 if (result.Success)
                 {
                     return RedirectToAction("Index", "Dashboard");
