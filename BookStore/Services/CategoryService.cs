@@ -1,6 +1,7 @@
 ﻿using BookStore.DBContexts;
 using BookStore.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,7 +18,15 @@ namespace BookStore.Services
 
         public async Task<List<Category>> GetCategories()
         {
-            return await context.Categories.Include(b => b.Books).Where(c => c.IsDeleted == false).ToListAsync();
+            try
+            {
+                return await context.Categories.Include(b => b.Books).Where(c => c.IsDeleted == false).ToListAsync();
+            }
+            
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task<Category> GetCategoryById(int categoryId)
